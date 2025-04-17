@@ -20,13 +20,3 @@ def pascal_triangle(n):
         row.append(1)
         triangle.append(row)
     return triangle
-
-def print_triangle(triangle):
-    """
-    Print Pascal's triangle row by row.
-
-    Args:
-        triangle (list): A list of lists representing Pascal's triangle.
-    """
-    for row in triangle:
-        print(row)
