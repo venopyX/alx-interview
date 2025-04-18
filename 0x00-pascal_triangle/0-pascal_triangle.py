@@ -7,7 +7,7 @@ Pascal's Triangle
 def pascal_triangle(n):
     """
     Returns a list of lists of integers representing
-    the Pascal’s triangle of n. Returns an empty list if n <= 0.
+    the Pascal's triangle of n. Returns an empty list if n <= 0.
 
     Args:
         n (int): Number of rows for Pascal's triangle.
