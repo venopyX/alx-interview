@@ -3,48 +3,43 @@
 const request = require('request');
 
 /**
- * Fetches and prints the names of characters
- * in a Star Wars movie in the same order as the characters list.
- * @param {string} movieId - The ID of the Star Wars movie.
+ * Fetches JSON from a URL and returns a Promise.
+ * @param {string} url - The URL to fetch.
+ * @returns {Promise<Object>}
  */
-function fetchMovieCharacters(movieId) {
-  const url = `https://swapi-api.alx-tools.com/api/films/${movieId}`;
-
-  request(url, function (err, res, body) {
-    if (err) {
-      console.error('Error:', err);
-      return;
-    }
-
-    const actors = JSON.parse(body).characters;
-    printCharactersInOrder(actors, 0);
+function fetchJSON(url) {
+  return new Promise((resolve, reject) => {
+    request(url, (err, res, body) => {
+      if (err) reject(err);
+      else resolve(JSON.parse(body));
+    });
   });
 }
 
 /**
- * Recursively prints character names in the order of the provided URLs.
- * @param {Array} actors - Array of character URLs.
- * @param {number} index - Current index in the actors array.
+ * Fetches and prints character names of a Star Wars movie by movieId.
+ * Maintains the order of characters.
+ * @param {string} movieId
  */
-function printCharactersInOrder(actors, index) {
-  if (index === actors.length) return;
+async function fetchAndPrintCharacters(movieId) {
+  try {
+    const film = await fetchJSON(`https://swapi-api.alx-tools.com/api/films/${movieId}`);
+    const characters = film.characters;
 
-  request(actors[index], function (err, res, body) {
-    if (err) {
-      console.error('Error:', err);
-      return;
+    for (const url of characters) {
+      const character = await fetchJSON(url);
+      console.log(character.name);
     }
-
-    console.log(JSON.parse(body).name);
-    printCharactersInOrder(actors, index + 1);
-  });
+  } catch (err) {
+    console.error(err);
+  }
 }
 
-// Check if a movie ID is provided
+// Main
 const movieId = process.argv[2];
 if (!movieId) {
   console.error('Usage: ./0-starwars_characters.js <Movie ID>');
   process.exit(1);
 }
 
-fetchMovieCharacters(movieId);
+fetchAndPrintCharacters(movieId);
