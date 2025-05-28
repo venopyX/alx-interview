@@ -7,7 +7,7 @@ const request = require('request');
  * @param {string} movieId - The ID of the Star Wars movie.
  */
 function fetchMovieCharacters(movieId) {
-  const url = `https://swapi-api.hbtn.io/api/films/${movieId}`;
+  const url = `https://swapi-api.alx-tools.com/api/films/${movieId}`;
 
   request(url, function (err, res, body) {
     if (err) {
