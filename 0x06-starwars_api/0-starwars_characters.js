@@ -3,7 +3,8 @@
 const request = require('request');
 
 /**
- * Fetches and prints the names of characters in a Star Wars movie in the same order as the characters list.
+ * Fetches and prints the names of characters
+ * in a Star Wars movie in the same order as the characters list.
  * @param {string} movieId - The ID of the Star Wars movie.
  */
 function fetchMovieCharacters(movieId) {
